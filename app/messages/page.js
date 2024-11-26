@@ -11,10 +11,7 @@ const statesWithCities = [
   { state: "Alaska", cities: ["Anchorage", "Juneau", "Fairbanks"] },
   { state: "Arizona", cities: ["Phoenix", "Tucson", "Mesa"] },
   { state: "Arkansas", cities: ["Little Rock", "Fort Smith", "Fayetteville"] },
-  {
-    state: "California",
-    cities: ["Los Angeles", "San Francisco", "San Diego"],
-  },
+  { state: "California", cities: ["Los Angeles", "San Francisco", "San Diego"] },
   { state: "Colorado", cities: ["Denver", "Colorado Springs", "Aurora"] },
   { state: "Connecticut", cities: ["Hartford", "New Haven", "Stamford"] },
   { state: "Delaware", cities: ["Wilmington", "Dover", "Newark"] },
@@ -47,10 +44,7 @@ const statesWithCities = [
   { state: "Ohio", cities: ["Columbus", "Cleveland", "Cincinnati"] },
   { state: "Oklahoma", cities: ["Oklahoma City", "Tulsa", "Norman"] },
   { state: "Oregon", cities: ["Portland", "Salem", "Eugene"] },
-  {
-    state: "Pennsylvania",
-    cities: ["Philadelphia", "Pittsburgh", "Harrisburg"],
-  },
+  { state: "Pennsylvania", cities: ["Philadelphia", "Pittsburgh", "Harrisburg"] },
   { state: "Rhode Island", cities: ["Providence", "Newport", "Warwick"] },
   { state: "South Carolina", cities: ["Charleston", "Columbia", "Greenville"] },
   { state: "South Dakota", cities: ["Sioux Falls", "Rapid City", "Aberdeen"] },
@@ -60,10 +54,7 @@ const statesWithCities = [
   { state: "Vermont", cities: ["Burlington", "Montpelier", "Rutland"] },
   { state: "Virginia", cities: ["Richmond", "Virginia Beach", "Norfolk"] },
   { state: "Washington", cities: ["Seattle", "Spokane", "Tacoma"] },
-  {
-    state: "West Virginia",
-    cities: ["Charleston", "Huntington", "Morgantown"],
-  },
+  { state: "West Virginia", cities: ["Charleston", "Huntington", "Morgantown"] },
   { state: "Wisconsin", cities: ["Milwaukee", "Madison", "Green Bay"] },
   { state: "Wyoming", cities: ["Cheyenne", "Casper", "Laramie"] },
 ];
@@ -77,6 +68,7 @@ const Page = () => {
   const [selectedState, setSelectedState] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
   const [zipCode, setZipCode] = useState("");
+  const [isLoading, setIsLoading] = useState(false); // New state for loading
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -85,13 +77,14 @@ const Page = () => {
 
   const handleModalSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true); // Set loading to true when submission starts
     try {
       await addDoc(collection(db, "MessagesData"), {
         phone: phone,
         state: selectedState,
         city: selectedCity,
         zipCode: zipCode,
-        message:message
+        message: message,
       });
       // Reset form and close modal
       setPhone("");
@@ -103,13 +96,15 @@ const Page = () => {
       router.back(); // Navigate to the previous page
     } catch (e) {
       console.error("Error adding document: ", e);
+    } finally {
+      setIsLoading(false); // Reset loading state
     }
   };
 
-
   // Determine if the form is complete
   const isFormComplete = phone && selectedState && selectedCity;
-  const messageComplete=message
+  const messageComplete = message;
+
   return (
     <div className="w-screen h-screen relative">
       {/* Background Image */}
@@ -135,15 +130,15 @@ const Page = () => {
                 placeholder="Type your message"
                 className="w-full p-2 mb-4 text-black rounded-lg h-40 break-words"
               />
-             <button
-                  type="submit"
-                  className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 ${
-                    !messageComplete ? "opacity-50 cursor-not-allowed" : ""
-                  }`}
-                  disabled={!messageComplete}
-                >
-                  Submit
-                </button>
+              <button
+                type="submit"
+                className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 ${
+                  !messageComplete ? "opacity-50 cursor-not-allowed" : ""
+                }`}
+                disabled={!messageComplete}
+              >
+                Submit
+              </button>
             </form>
           </div>
         </div>
@@ -246,11 +241,11 @@ const Page = () => {
                 <button
                   type="submit"
                   className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 ${
-                    !isFormComplete ? "opacity-50 cursor-not-allowed" : ""
+                    !isFormComplete || isLoading ? "opacity-50 cursor-not-allowed" : ""
                   }`}
-                  disabled={!isFormComplete}
+                  disabled={!isFormComplete || isLoading}
                 >
-                  Submit
+                  {isLoading ? "Submitting..." : "Submit"}
                 </button>
               </form>
             </div>

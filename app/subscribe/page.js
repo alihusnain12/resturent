@@ -64,29 +64,29 @@ const Subscribe = () => {
   const [countryCode, setCountryCode] = useState('+1');
   const [selectedState, setSelectedState] = useState('');
   const [selectedCity, setSelectedCity] = useState('');
-  const router=useRouter()
-  const handleSubmit =async (e) => {
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     try {
-        await addDoc(collection(db,"Subscription"),{
-            phone:phone,
-            selectedState:selectedState,
-            selectedCity:selectedCity
-        })
-         // Reset all fields to their initial state
-    setPhone('');
-    setSelectedState('');
-    setSelectedCity('');
-    router.back()
+      await addDoc(collection(db, "Subscription"), {
+        phone: phone,
+        selectedState: selectedState,
+        selectedCity: selectedCity
+      });
+      // Reset all fields to their initial state
+      setPhone('');
+      setSelectedState('');
+      setSelectedCity('');
+      router.back();
     } catch (error) {
-        console.error("Error adding document: ", error);
+      console.error("Error adding document: ", error);
+    } finally {
+      setLoading(false);
     }
-    // Reset all fields to their initial state
-    setPhone('');
-    setCountryCode('+1');
-    setSelectedState('');
-    setSelectedCity('');
   };
 
   // Determine if the form is complete
@@ -160,9 +160,9 @@ const Subscribe = () => {
           <button 
             type='submit' 
             className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 ${!isFormComplete ? 'opacity-50 cursor-not-allowed' : ''}`}
-            disabled={!isFormComplete}
+            disabled={!isFormComplete || loading}
           >
-            Submit
+            {loading ? 'Submitting...' : 'Submit'}
           </button>
         </form>
       </div>
