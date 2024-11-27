@@ -77,7 +77,13 @@ const Page = () => {
 
   const handleModalSubmit = async (e) => {
     e.preventDefault();
-    setIsLoading(true); // Set loading to true when submission starts
+    setIsLoading(true);  // Set loading to true when submission starts
+    // phone validation
+    if (phone.length !== 10) {
+      alert("Phone number must be exactly 10 digits");
+      setIsLoading(false);
+      return};
+
     try {
       await addDoc(collection(db, "MessagesData"), {
         phone: phone,
@@ -86,6 +92,7 @@ const Page = () => {
         zipCode: zipCode,
         message: message,
       });
+      alert("Your message has been sent successfully")
       // Reset form and close modal
       setPhone("");
       setSelectedState("");
@@ -175,6 +182,7 @@ const Page = () => {
                     />
                   </div>
                 </div>
+                {/* states and cities */}
                 <div className="mb-4 w-full">
                   <label
                     htmlFor="state"

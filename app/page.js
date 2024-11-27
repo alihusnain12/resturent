@@ -37,7 +37,7 @@ const Page = () => {
         />
         {/* Heading */}
         <div className='absolute inset-0 flex flex-col justify-center items-center text-center p-4'>
-          <h1 className='text-4xl md:text-6xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 drop-shadow-md'>
+          <h1 className='text-4xl md:text-6xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-black to-red-700 drop-shadow-md'>
             Welcome to TacosDeCrema
           </h1>
           <p className='text-xl md:text-2xl text-gray-300 mt-4'>Experience authentic Mexican flavors like never before</p>
