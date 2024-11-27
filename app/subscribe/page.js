@@ -94,6 +94,7 @@ const Subscribe = () => {
       setPhone("");
       setSelectedState("");
       setSelectedCity("");
+      alert("your deatils has been submitted successfully")
       router.back();
     } catch (error) {
       console.error("Error adding document: ", error);

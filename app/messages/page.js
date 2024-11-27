@@ -92,7 +92,7 @@ const Page = () => {
         zipCode: zipCode,
         message: message,
       });
-      alert("Your message has been sent successfully")
+      
       // Reset form and close modal
       setPhone("");
       setSelectedState("");
@@ -100,6 +100,7 @@ const Page = () => {
       setZipCode("");
       setMessage("");
       setIsModalOpen(false);
+      alert("Your message has been sent successfully")
       router.back(); // Navigate to the previous page
     } catch (e) {
       console.error("Error adding document: ", e);
