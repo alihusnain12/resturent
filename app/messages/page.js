@@ -109,7 +109,7 @@ const Page = () => {
   };
 
   // Determine if the form is complete
-  const isFormComplete = phone && selectedState && selectedCity;
+  const isFormComplete = phone && selectedState && selectedCity && phone.length==10;
   const messageComplete = message;
 
   return (
@@ -144,7 +144,7 @@ const Page = () => {
                 }`}
                 disabled={!messageComplete}
               >
-                Submit
+                Send Alert
               </button>
             </form>
           </div>

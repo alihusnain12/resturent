@@ -48,7 +48,7 @@ const Page = () => {
         <div className="bg-blue-500 p-2 md:p-4 rounded-lg shadow-lg flex items-center"onClick={messgepage}>
           <TbMessageFilled size={20} className="mr-2 md:hidden" />
           <TbMessageFilled size={30} className="mr-2 hidden md:block" />
-          <span className="text-white text-sm md:text-base">Message</span>
+          <span className="text-white text-sm md:text-base">Send Alert</span>
         </div>
       </div>
     </div>

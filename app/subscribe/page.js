@@ -102,7 +102,7 @@ const Subscribe = () => {
     }
   };
   // Determine if the form is complete
-  const isFormComplete = phone && selectedState && selectedCity;
+  const isFormComplete = phone && selectedState && selectedCity && phone.length==10;
 
   return (
     <div className="w-screen h-screen relative flex justify-center items-center">
